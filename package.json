@@ -1,0 +1,22 @@
+{
+  "name": "data-table-performance-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ota-meshi/data-table-performance-test.git"
+  },
+  "author": "ota",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ota-meshi/data-table-performance-test/issues"
+  },
+  "homepage": "https://github.com/ota-meshi/data-table-performance-test#readme",
+  "devDependencies": {
+    "eslint": "^4.11.0"
+  }
+}

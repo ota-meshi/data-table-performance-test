@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Table Performance Test</title>
+    <style type="text/css">
+table {
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+th {
+    border-top: solid 1.5px #aaa;
+    border-bottom: solid 1.5px #aaa;
+    padding: 5px 10px;
+}
+td {
+    border-bottom: solid 1px #aaa;
+    padding: 5px 10px;
+}
+    </style>
+</head>
+<body>
+    <script>
+'use strict';
+function custom(href) {
+	href = href + '?times=' +
+		document.getElementById('times').value + '&records=' +
+		document.getElementById('records').value;
+	if (document.getElementById('clear').checked) {
+		href += '&clear=true';
+	}
+    window.open(href);
+	return false;
+}
+    </script>
+    <h1>Data Table Performance Test</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>100 times init<br>1,000,000 records</th>
+                <th>100 times init &amp; clear<br>1,000,000 records</th>
+                <th><input type="number" id="times" value="100"> times init<br><input type="checkbox" id="clear">&amp; clear<br><input type="number" id="records" value="1000000"> records</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Cheetah Grid</td>
+                <td><a href="./cheetah-grid/index.html">link</a></td>
+                <td><a href="./cheetah-grid/index.html?clear=true">link</a></td>
+                <td><a href="javascript:void(0);" onclick="custom('./cheetah-grid/index.html')">link</a></td>
+            </tr>
+            <tr>
+                <td>SlickGrid</td>
+                <td><a href="./slickgrid/index.html">link</a></td>
+                <td><a href="./slickgrid/index.html?clear=true">link</a></td>
+                <td><a href="javascript:void(0);" onclick="custom('./slickgrid/index.html')">link</a></td>
+            </tr>
+            <tr>
+                <td>fin-hypergrid</td>
+                <td><a href="./fin-hypergrid/index.html">link</a></td>
+                <td><a href="./fin-hypergrid/index.html?clear=true">link</a></td>
+                <td><a href="javascript:void(0);" onclick="custom('./fin-hypergrid/index.html')">link</a></td>
+            </tr>
+            
+        </tbody>
+    </table>
+</body>
+</html>
