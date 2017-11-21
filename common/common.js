@@ -69,7 +69,7 @@ function refResult(results) {
 		return Math.min(prev, current);
 	});
 	const avg = sum / results.length;
-	resultElement.textContent = 'avg: ' + avg + 'ms / max: ' + max + 'ms min: ' + min + 'ms\n' +
+	resultElement.textContent = 'average: ' + avg + 'ms / max: ' + max + 'ms min: ' + min + 'ms\n' +
 		'times: ' + results.length;
 }
 
@@ -140,8 +140,15 @@ function drawChart(results) {
 			start = end;
 			end = start + point;
 		}
-
-		const data = google.visualization.arrayToDataTable(summary);
+		function getGetOrdinal(n) {
+			const s = ['th', 'st', 'nd', 'rd'];
+			const v = n % 100;
+			return n + (s[(v - 20) % 10] || s[v] || s[0]);
+		}
+		const timesResults = [['time', 'ms']];
+		results.forEach(function(val, i) {
+			timesResults.push([getGetOrdinal(i + 1), val]);
+		});
 
 		const options = {
 			title: 'Performance',
@@ -149,14 +156,22 @@ function drawChart(results) {
 			legend: {position: 'bottom'}
 		};
 
-		const ce = document.createElement('div');
-		ce.style.width = '100%';
-		ce.style.height = '500px';
-		resultElement.appendChild(ce);
+		const cce = document.createElement('div');
+		cce.style.width = '100%';
+		cce.style.height = '500px';
+		resultElement.appendChild(cce);
+		const lce = document.createElement('div');
+		lce.style.width = '100%';
+		lce.style.height = '500px';
+		resultElement.appendChild(lce);
 
-		const chart = new google.visualization.ColumnChart(ce);
+		const cchart = new google.visualization.ColumnChart(cce);
 
-		chart.draw(data, options);
+		cchart.draw(google.visualization.arrayToDataTable(summary), options);
+
+		const lchart = new google.visualization.LineChart(lce);
+
+		lchart.draw(google.visualization.arrayToDataTable(timesResults), options);
 		
 	});
 }
