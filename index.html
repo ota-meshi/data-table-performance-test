@@ -56,7 +56,7 @@ window.addBenchmark = function(name, tryCount, recordsCount, dispose, resultHtml
 		return e;
 	};
 	const e = function(tag, id, html) {
-		const elem = document.createElement('tr');
+		const elem = document.createElement(tag);
 		if (id) {
 			elem.id = id;
 		}
@@ -65,14 +65,15 @@ window.addBenchmark = function(name, tryCount, recordsCount, dispose, resultHtml
 		}
 		return elem;
 	};
-	const testKey = tryCount + '-' + recordsCount + '-' + (dispose ? 'dispose' : '');
+	const testKey = 'k' + tryCount + '-' + recordsCount + '-' + (dispose ? 'dispose' : '');
 
 	const table = q(document, '#benchmarks');
 	const htr = q(table, 'thead', 'tr');
 	const tbody = q(table, 'tbody');
-	let tr = q(tbody, '#' + name);
+	let tr = q(tbody, '#benchmark-' + name);
 	if (!tr) {
-		tr = e('tr', name, name);
+		tr = e('tr', 'benchmark-' + name);
+		tr.appendChild(e('td', null, name));
 		tbody.appendChild(tr);
 	}
 
@@ -85,9 +86,8 @@ window.addBenchmark = function(name, tryCount, recordsCount, dispose, resultHtml
 		htr.appendChild(htarget);
 	}
 	const index = Array.prototype.indexOf.call(htr.children, htarget);
-	while (tr.children.length <= (index + 1)) {
-		const td = document.createElement('td');
-		tr.appendChild(td);
+	while (tr.children.length < (index + 1)) {
+		tr.appendChild(e('td'));
 	}
 	const td = tr.children[index];
 	if (td.textContent) {
@@ -142,7 +142,7 @@ window.addBenchmark = function(name, tryCount, recordsCount, dispose, resultHtml
     </table>
     <h3>benchmarks</h3>
     <table id="benchmarks">
-        <thead><tr></tr></thead>
+        <thead><tr><th>name</th></tr></thead>
         <tbody></tbody>
     </table>
 
