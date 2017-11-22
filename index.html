@@ -47,6 +47,55 @@ function custom(href) { // eslint-disable-line no-unused-vars
 	window.open(href, '_blank');
 	return false;
 }
+window.addBenchmark = function(name, tryCount, recordsCount, dispose, resultHtml) {
+	const q = function(e, sel) {
+		const args = Array.prototype.slice.call(arguments, 1);
+		args.forEach(function(sel) {
+			e = e.querySelector(sel);
+		});
+		return e;
+	};
+	const e = function(tag, id, html) {
+		const elem = document.createElement('tr');
+		if (id) {
+			elem.id = id;
+		}
+		if (html) {
+			elem.innerHTML = html;
+		}
+		return elem;
+	};
+	const testKey = tryCount + '-' + recordsCount + '-' + (dispose ? 'dispose' : '');
+
+	const table = q(document, '#benchmarks');
+	const htr = q(table, 'thead', 'tr');
+	const tbody = q(table, 'tbody');
+	let tr = q(tbody, '#' + name);
+	if (!tr) {
+		tr = e('tr', name, name);
+		tbody.appendChild(tr);
+	}
+
+	
+	let htarget = q(htr, '#' + testKey);
+	if (!htarget) {
+		htarget = e('th', testKey, '<th>' + tryCount + ' times init' +
+					(dispose ? '<br>dispose after initialization' : '') +
+					'<br>' + (recordsCount - 0).toLocaleString() + ' records</th>');
+		htr.appendChild(htarget);
+	}
+	const index = Array.prototype.indexOf.call(htr.children, htarget);
+	while (tr.children.length <= (index + 1)) {
+		const td = document.createElement('td');
+		tr.appendChild(td);
+	}
+	const td = tr.children[index];
+	if (td.textContent) {
+		td.appendChild(e('br'));
+	}
+	td.appendChild(e('span', null, resultHtml));
+
+};
     </script>
     <a class="github-button" href="https://github.com/ota-meshi" data-size="large" aria-label="Follow @ota-meshi on GitHub">Follow @ota-meshi</a>
     <a class="github-button" href="https://github.com/ota-meshi/data-table-performance-test" data-size="large" data-icon="octicon-star" aria-label="Star ota-meshi/data-table-performance-test on GitHub">Star</a>
@@ -90,6 +139,11 @@ function custom(href) { // eslint-disable-line no-unused-vars
             </tr>
             
         </tbody>
+    </table>
+    <h3>benchmarks</h3>
+    <table id="benchmarks">
+        <thead><tr></tr></thead>
+        <tbody></tbody>
     </table>
 
     <h1>others</h1>

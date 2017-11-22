@@ -79,7 +79,23 @@ function refResult(results) {
 	resultElement.innerHTML = '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span><br>' +
 		'times: <b>' + results.length + '</b><br>record count: <b>' + (recordCount - 0).toLocaleString() + '</b>';
 }
-
+function refResultEnd(results) {
+	if (window.parent && window.parent.addBenchmark) {
+		const sum = results.reduce(function(prev, current) {
+			return prev + current;
+		});
+		const max = results.reduce(function(prev, current) {
+			return Math.max(prev, current);
+		});
+		const min = results.reduce(function(prev, current) {
+			return Math.min(prev, current);
+		});
+		const avg = sum / results.length;
+		const html = '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span>';
+		window.parent.addBenchmark(name, tryTimes, recordCount, needClear, html);
+	}
+	drawChart(results);
+}
 
 function preformanceTests(initFn, clearFn, option) {
 	option = option || {};
@@ -114,7 +130,7 @@ function preformanceTests(initFn, clearFn, option) {
 					time();
 				}, 10);
 			} else {
-				drawChart(results);
+				refResultEnd(results);
 			}
 		}, 100);
 
