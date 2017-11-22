@@ -93,6 +93,7 @@ function refResultEnd(results) {
 		});
 		const avg = sum / results.length;
 		const html = '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span>';
+		const name = document.querySelector('h1').textContent;
 		window.opener.addBenchmark(name, tryTimes, recordCount, needClear, html);
 	}
 }
