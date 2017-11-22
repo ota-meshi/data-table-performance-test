@@ -80,7 +80,8 @@ function refResult(results) {
 		'times: <b>' + results.length + '</b><br>record count: <b>' + (recordCount - 0).toLocaleString() + '</b>';
 }
 function refResultEnd(results) {
-	if (window.parent && window.parent.addBenchmark) {
+	drawChart(results);
+	if (window.opener && window.opener.addBenchmark) {
 		const sum = results.reduce(function(prev, current) {
 			return prev + current;
 		});
@@ -94,7 +95,6 @@ function refResultEnd(results) {
 		const html = '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span>';
 		window.parent.addBenchmark(name, tryTimes, recordCount, needClear, html);
 	}
-	drawChart(results);
 }
 
 function preformanceTests(initFn, clearFn, option) {
