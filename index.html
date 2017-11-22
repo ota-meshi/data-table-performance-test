@@ -65,14 +65,15 @@ window.addBenchmark = function(name, tryCount, recordsCount, dispose, resultHtml
 		}
 		return elem;
 	};
-	const testKey = 'k' + tryCount + '-' + recordsCount + '-' + (dispose ? 'dispose' : '');
+	const testKey = 'h' + tryCount + '-' + recordsCount + '-' + (dispose ? 'dispose' : '');
+	const nameKey = ('benchmark-' + name).replace(/\s/, '-');
 
 	const table = q(document, '#benchmarks');
 	const htr = q(table, 'thead', 'tr');
 	const tbody = q(table, 'tbody');
-	let tr = q(tbody, '#benchmark-' + name);
+	let tr = q(tbody, '#' + nameKey);
 	if (!tr) {
-		tr = e('tr', 'benchmark-' + name);
+		tr = e('tr', nameKey);
 		tr.appendChild(e('td', null, name));
 		tbody.appendChild(tr);
 	}
