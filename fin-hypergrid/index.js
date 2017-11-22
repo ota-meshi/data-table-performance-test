@@ -17,4 +17,4 @@ function clear(grid) {
 	grid.terminate();
 }
 
-preformanceTests(init, clear, 100, 1000000);
+preformanceTests(init, clear);

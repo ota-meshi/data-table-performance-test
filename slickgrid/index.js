@@ -21,4 +21,4 @@ function clear(grid) {
 	grid.destroy();
 }
 
-preformanceTests(init, clear, 100, 1000000);
+preformanceTests(init, clear);

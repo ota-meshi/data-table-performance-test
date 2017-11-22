@@ -19,6 +19,13 @@ function getUrlVars() {
 	return vars;
 }
 
+const params = getUrlVars();
+const tryTimes = (params.times || 100) - 0;
+const recordCount = (params.recordCount || 1000000) - 0;
+
+
+const needClear = !!params.clear;
+
 const generatePerson = function() {
 	const fnames = ['Sophia', 'Emma', 'Olivia', 'Isabella', 'Ava', 'Mia', 'Emily', 'Abigail', 'Madison', 'Elizabeth', 'Charlotte', 'Avery', 'Sofia', 'Chloe', 'Ella', 'Harper', 'Amelia', 'Aubrey', 'Addison', 'Evelyn', 'Natalie', 'Grace', 'Hannah', 'Zoey', 'Victoria', 'Lillian', 'Lily', 'Brooklyn', 'Samantha', 'Layla', 'Zoe', 'Audrey', 'Leah', 'Allison', 'Anna', 'Aaliyah', 'Savannah', 'Gabriella', 'Camila', 'Aria', 'Noah', 'Liam', 'Jacob', 'Mason', 'William', 'Ethan', 'Michael', 'Alexander', 'Jayden', 'Daniel', 'Elijah', 'Aiden', 'James', 'Benjamin', 'Matthew', 'Jackson', 'Logan', 'David', 'Anthony', 'Joseph', 'Joshua', 'Andrew', 'Lucas', 'Gabriel', 'Samuel', 'Christopher', 'John', 'Dylan', 'Isaac', 'Ryan', 'Nathan', 'Carter', 'Caleb', 'Luke', 'Christian', 'Hunter', 'Henry', 'Owen', 'Landon', 'Jack'];
 	const lnames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Miller', 'Davis', 'Garcia', 'Rodriguez', 'Wilson', 'Martinez', 'Anderson', 'Taylor', 'Thomas', 'Hernandez', 'Moore', 'Martin', 'Jackson', 'Thompson', 'White', 'Lopez', 'Lee', 'Gonzalez', 'Harris', 'Clark', 'Lewis', 'Robinson', 'Walker', 'Perez', 'Hall', 'Young', 'Allen', 'Sanchez', 'Wright', 'King', 'Scott', 'Green', 'Baker', 'Adams', 'Nelson', 'Hill', 'Ramirez', 'Campbell', 'Mitchell', 'Roberts', 'Carter', 'Phillips', 'Evans', 'Turner', 'Torres', 'Parker', 'Collins', 'Edwards', 'Stewart', 'Flores', 'Morris', 'Nguyen', 'Murphy', 'Rivera', 'Cook', 'Rogers', 'Morgan', 'Peterson', 'Cooper', 'Reed', 'Bailey', 'Bell', 'Gomez', 'Kelly', 'Howard', 'Ward', 'Cox', 'Diaz', 'Richardson', 'Wood', 'Watson', 'Brooks', 'Bennett', 'Gray', 'James', 'Reyes', 'Cruz', 'Hughes', 'Price', 'Myers', 'Long', 'Foster', 'Sanders', 'Ross', 'Morales', 'Powell', 'Sullivan', 'Russell', 'Ortiz', 'Jenkins', 'Gutierrez', 'Perry', 'Butler', 'Barnes', 'Fisher'];
@@ -48,13 +55,13 @@ function generatePersons(num) {
 	return records;
 }
 
-function createParent() {
-	const div = document.createElement('div');
+function createParent(tagname) {
+	const div = document.createElement(tagname);
 	div.classList.add('parent');
 	document.body.appendChild(div);
 	return div;
 }
-const resultElement = document.createElement('pre');
+const resultElement = document.createElement('div');
 resultElement.classList.add('result');
 document.body.insertBefore(resultElement, document.body.childNodes[0]);
 
@@ -69,19 +76,17 @@ function refResult(results) {
 		return Math.min(prev, current);
 	});
 	const avg = sum / results.length;
-	resultElement.textContent = 'average: ' + avg + 'ms / max: ' + max + 'ms min: ' + min + 'ms\n' +
-		'times: ' + results.length;
+	resultElement.innerHTML = '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span><br>' +
+		'times: <b>' + results.length + '</b><br>record count: <b>' + (recordCount - 0).toLocaleString() + '</b>';
 }
 
-const params = getUrlVars();
-const tryTimes = (params.times || 100) - 0;
-const recordCount = (params.recordCount || 1000000) - 0;
 
-
-const needClear = !!params.clear;
-
-function preformanceTests(initFn, clearFn) {
-	const data = generatePersons(recordCount);
+function preformanceTests(initFn, clearFn, option) {
+	option = option || {};
+	option.transformData = option.transformData || function(data) { return data; };
+	option.transformParent = option.transformParent || function() {};
+	option.parentTag = option.parentTag || 'div';
+	const data = option.transformData(generatePersons(recordCount));
 	
 	const results = [];
 
@@ -95,7 +100,8 @@ function preformanceTests(initFn, clearFn) {
 	}
 	let count = 0;
 	function time() {
-		const parent = createParent();
+		const parent = createParent(option.parentTag);
+		option.transformParent(parent);
 		setTimeout(function() {
 			const grid = test(parent);
 			count++;

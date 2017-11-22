@@ -11,11 +11,19 @@ table {
 th {
     border-top: solid 1.5px #aaa;
     border-bottom: solid 1.5px #aaa;
+    border-left: dotted 1.5px #ddd;
+    border-right: dotted 1.5px #ddd;
     padding: 5px 10px;
 }
 td {
     border-bottom: solid 1px #aaa;
+    border-left: dotted 1px #ddd;
+    border-right: dotted 1px #ddd;
     padding: 5px 10px;
+}
+input[type="number"] {
+    text-align: right;
+    width: 5.5em;
 }
     </style>
 </head>
@@ -39,30 +47,69 @@ function custom(href) {
             <tr>
                 <th>name</th>
                 <th>100 times init<br>1,000,000 records</th>
-                <th>100 times init &amp; clear<br>1,000,000 records</th>
-                <th><input type="number" id="times" value="100"> times init<br><input type="checkbox" id="clear">&amp; clear<br><input type="number" id="records" value="1000000"> records</th>
+                <th>100 times init<br>dispose after initialization<br>1,000,000 records</th>
+                <th><input type="number" id="times" value="100"> times init<br><input type="checkbox" id="clear">dispose after initialization<br><input type="number" id="records" value="1000000"> records</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Cheetah Grid</td>
-                <td><a href="./cheetah-grid/index.html">link</a></td>
-                <td><a href="./cheetah-grid/index.html?clear=true">link</a></td>
-                <td><a href="javascript:void(0);" onclick="custom('./cheetah-grid/index.html')">link</a></td>
+                <td><a href="https://github.com/future-architect/cheetah-grid">Cheetah Grid</a></td>
+                <td><a href="./cheetah-grid/index.html">open</a></td>
+                <td><a href="./cheetah-grid/index.html?clear=true">open</a></td>
+                <td><a href="javascript:void(0);" onclick="custom('./cheetah-grid/index.html')">open</a></td>
             </tr>
             <tr>
-                <td>SlickGrid</td>
-                <td><a href="./slickgrid/index.html">link</a></td>
-                <td><a href="./slickgrid/index.html?clear=true">link</a></td>
-                <td><a href="javascript:void(0);" onclick="custom('./slickgrid/index.html')">link</a></td>
+                <td><a href="https://github.com/6pac/SlickGrid">SlickGrid</a></td>
+                <td><a href="./slickgrid/index.html">open</a></td>
+                <td><a href="./slickgrid/index.html?clear=true">open</a></td>
+                <td><a href="javascript:void(0);" onclick="custom('./slickgrid/index.html')">open</a></td>
             </tr>
             <tr>
-                <td>fin-hypergrid</td>
-                <td><a href="./fin-hypergrid/index.html">link</a></td>
-                <td><a href="./fin-hypergrid/index.html?clear=true">link</a></td>
-                <td><a href="javascript:void(0);" onclick="custom('./fin-hypergrid/index.html')">link</a></td>
+                <td><a href="https://github.com/openfin/fin-hypergrid">fin-hypergrid</a></td>
+                <td><a href="./fin-hypergrid/index.html">open</a></td>
+                <td><a href="./fin-hypergrid/index.html?clear=true">open</a></td>
+                <td><a href="javascript:void(0);" onclick="custom('./fin-hypergrid/index.html')">open</a></td>
             </tr>
             
+        </tbody>
+    </table>
+
+    <h1>others</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>10 times init<br>100,000 records</th>
+                <th>10 times init<br>dispose after initialization<br>100,000 records</th>
+                <th>1 time init<br>100,000 records</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="https://handsontable.com/">Handsontable</a></td>
+                <td><a href="./handsontable/index.html?times=10&recordCount=100000">open</a></td>
+                <td><a href="./handsontable/index.html?times=10&recordCount=100000&clear=true">open</a></td>
+                <td><a href="./handsontable/index.html?times=1&recordCount=100000">open</a></td>
+            </tr>
+            <tr>
+                <td><a href="https://datatables.net/">DataTables</a></td>
+                <td><a href="./datatables/index.html?times=10&recordCount=100000">open</a></td>
+                <td><a href="./datatables/index.html?times=10&recordCount=100000&clear=true">open</a></td>
+                <td><a href="./datatables/index.html?times=1&recordCount=100000">open</a></td>
+            </tr>
+            <tr>
+                <td><a href="https://www.ag-grid.com//">ag-Grid</a></td>
+                <td><a href="./ag-grid/index.html?times=10&recordCount=100000">open</a></td>
+                <td><a href="./ag-grid/index.html?times=10&recordCount=100000&clear=true">open</a></td>
+                <td><a href="./ag-grid/index.html?times=1&recordCount=100000">open</a></td>
+            </tr>
+
+            <tr>
+                <td><a href="http://w2ui.com/web/">w2ui</a></td>
+                <td><a href="./w2ui/index.html?times=10&recordCount=100000">open</a></td>
+                <td><a href="./w2ui/index.html?times=10&recordCount=100000&clear=true">open</a></td>
+                <td><a href="./w2ui/index.html?times=1&recordCount=100000">open</a></td>
+            </tr>
         </tbody>
     </table>
 </body>
