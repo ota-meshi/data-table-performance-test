@@ -42,7 +42,7 @@ function init(parent, data) {
 	const CustomizeGrid = function() {
 		DrawGrid.apply(this, arguments);
 		this.rowCount = data.length + 1;
-		this.colCount = 4;
+		this.colCount = headerCaptions.length;
 		this.frozenColCount = 1;
 		this.frozenRowCount = 1;
 		
@@ -78,7 +78,7 @@ function init(parent, data) {
 
 			fillCell(ctx, this, context);
 			borderCell(ctx, this, context);
-			textCell(ctx, getCellValue(col, row), this, context);
+			fillTextCell(ctx, getCellValue(col, row), this, context);
 		} finally {
 			ctx.restore();
 		}
@@ -114,16 +114,9 @@ function init(parent, data) {
 
 		ctx.lineWidth = 1;
 
-		if (!Array.isArray(borderColors)) {
-			if (borderColor) {
-				ctx.strokeStyle = borderColors;
-				ctx.strokeRect(left, top, width, height);
-			}
-		} else {
-			canvashelper.strokeColorsRect(ctx, toBoxArray(borderColors), left, top, width, height);
-		}
+		canvashelper.strokeColorsRect(ctx, toBoxArray(borderColors), left, top, width, height);
 	}
-	function textCell(ctx, text, grid, context) {
+	function fillTextCell(ctx, text, grid, context) {
 		const rect = context.getRect();
 		const row = context.row;
 		const col = context.col;
