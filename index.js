@@ -53,33 +53,35 @@ window.addBenchmark = function(name, tryCount, recordsCount, dispose, resultHtml
 	const testKey = 'h' + tryCount + '-' + recordsCount + '-' + (dispose ? 'dispose' : '');
 	const nameKey = ('benchmark-' + name).replace(/\s/, '-');
 
-	const table = q(document, '#benchmarks');
-	table.classList.remove('hidden');
-	const htr = q(table, 'thead', 'tr');
-	const tbody = q(table, 'tbody');
-	let tr = q(tbody, '#' + nameKey);
-	if (!tr) {
-		tr = e('tr', nameKey);
-		tr.appendChild(e('td', null, name));
-		tbody.appendChild(tr);
+	const benchmarksTable = q(document, '#benchmarks');
+	benchmarksTable.classList.remove('hidden');
+	const headerTr = q(benchmarksTable, 'thead', 'tr');
+	const tbody = q(benchmarksTable, 'tbody');
+	let gridTr = q(tbody, '#' + nameKey);
+	if (!gridTr) {
+		gridTr = e('tr', nameKey);
+		gridTr.appendChild(e('td', null, name));
+		tbody.appendChild(gridTr);
 	}
 
 	
-	let htarget = q(htr, '#' + testKey);
-	if (!htarget) {
-		htarget = e('th', testKey, '<th>' + tryCount + ' times init' +
+	let testTargetTh = q(headerTr, '#' + testKey);
+	if (!testTargetTh) {
+		testTargetTh = e('th', testKey, '<th>' + tryCount + ' times init' +
 					(dispose ? '<br>dispose after initialization' : '') +
 					'<br>' + (recordsCount - 0).toLocaleString() + ' records</th>');
-		htr.appendChild(htarget);
+		headerTr.appendChild(testTargetTh);
 	}
-	const index = Array.prototype.indexOf.call(htr.children, htarget);
-	while (tr.children.length < (index + 1)) {
-		tr.appendChild(e('td'));
+	const index = Array.prototype.indexOf.call(headerTr.children, testTargetTh);
+	Array.prototype.forEach.call(tbody.children, function(tr) {
+		while (tr.children.length < (index + 1)) {
+			tr.appendChild(e('td'));
+		}
+	});
+	const resultTd = gridTr.children[index];
+	if (resultTd.textContent) {
+		resultTd.appendChild(e('br'));
 	}
-	const td = tr.children[index];
-	if (td.textContent) {
-		td.appendChild(e('br'));
-	}
-	td.appendChild(e('span', null, resultHtml));
+	resultTd.appendChild(e('span', null, resultHtml));
 
 };

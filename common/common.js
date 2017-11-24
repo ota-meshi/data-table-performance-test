@@ -98,7 +98,7 @@ function refResultEnd(results) {
 			const avg = sum / results.length;
 			html = '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span>';
 		} else {
-			html = '<span>average: <b>' + results[0] + 'ms';
+			html = '<span><b>' + results[0] + 'ms</b></span>';
 		}
 		const name = document.querySelector('h1').textContent;
 		window.opener.addBenchmark(name, tryTimes, recordCount, needClear, html);
