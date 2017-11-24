@@ -75,7 +75,7 @@ window.addBenchmark = function(name, tryCount, recordsCount, dispose, resultHtml
 		return elem;
 	};
 	const testKey = 'h' + tryCount + '-' + recordsCount + '-' + (dispose ? 'dispose' : '');
-	const nameKey = ('benchmark-' + name).replace(/\s/g, '-');
+	const nameKey = ('benchmark-' + name).replace(/[\s\(\)\.]/g, '-');
 
 	const benchmarksTable = q(document, '#benchmarks');
 	benchmarksTable.classList.remove('hidden');

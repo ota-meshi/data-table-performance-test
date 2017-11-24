@@ -70,18 +70,26 @@ const resultElement = document.createElement('div');
 resultElement.classList.add('result');
 document.body.insertBefore(resultElement, document.body.childNodes[0]);
 
+function resultInfoHtml(results) {
+	if (results.length > 1) {
+		const sum = results.reduce(function(prev, current) {
+			return prev + current;
+		});
+		const max = results.reduce(function(prev, current) {
+			return Math.max(prev, current);
+		});
+		const min = results.reduce(function(prev, current) {
+			return Math.min(prev, current);
+		});
+		const avg = sum / results.length;
+		return '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span>';
+	} else {
+		return '<span><b>' + results[0] + 'ms</b></span>';
+	}
+}
+
 function refResult(results) {
-	const sum = results.reduce(function(prev, current) {
-		return prev + current;
-	});
-	const max = results.reduce(function(prev, current) {
-		return Math.max(prev, current);
-	});
-	const min = results.reduce(function(prev, current) {
-		return Math.min(prev, current);
-	});
-	const avg = sum / results.length;
-	resultElement.innerHTML = '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span><br>' +
+	resultElement.innerHTML = resultInfoHtml(results) + '<br>' +
 		'times: <b>' + results.length + '</b><br>record count: <b>' + recordCount.toLocaleString() + '</b>';
 }
 function refResultEnd(results, initFn) {
@@ -90,22 +98,7 @@ function refResultEnd(results, initFn) {
 		appendChart(results);
 	}
 	if (window.opener && window.opener.addBenchmark) {
-		let html;
-		if (results.length > 1) {
-			const sum = results.reduce(function(prev, current) {
-				return prev + current;
-			});
-			const max = results.reduce(function(prev, current) {
-				return Math.max(prev, current);
-			});
-			const min = results.reduce(function(prev, current) {
-				return Math.min(prev, current);
-			});
-			const avg = sum / results.length;
-			html = '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span>';
-		} else {
-			html = '<span><b>' + results[0] + 'ms</b></span>';
-		}
+		const html = resultInfoHtml(results);
 		const name = document.querySelector('h1').textContent;
 		window.opener.addBenchmark(name, tryTimes, recordCount, needClear, html);
 	}

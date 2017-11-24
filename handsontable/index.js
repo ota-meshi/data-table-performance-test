@@ -10,12 +10,8 @@ function init(parent, data) {
 			{data: 'lname', type: 'text', width: 200},
 			{data: 'email', type: 'text', width: 200}
 		],
-		// stretchH: 'all',
-		// width: 806,
-		// autoWrapRow: true,
 		height: 500,
 		maxRows: data.length,
-		// rowHeaders: true,
 		colHeaders: [
 			'ID',
 			'First Name',
@@ -24,11 +20,6 @@ function init(parent, data) {
 		],
 		manualRowResize: true,
 		manualColumnResize: true,
-		// manualRowMove: true,
-		// manualColumnMove: true,
-		// contextMenu: true,
-		// filters: true,
-		// dropdownMenu: true
 	};
 	return new Handsontable(parent, hotSettings);
 }
