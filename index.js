@@ -49,7 +49,7 @@ function bindCustomLinkHref(a) {
 	const table = findParentTable(a);
 	let href = a.href.replace(a.search, '').replace(a.hash, '');
 	href = href + '?times=' +
-		table.querySelector('.times').value + '&records=' +
+		table.querySelector('.times').value + '&recordCount=' +
 		table.querySelector('.records').value;
 	if (table.querySelector('.clear').checked) {
 		href += '&clear=true';
