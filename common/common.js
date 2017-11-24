@@ -27,8 +27,9 @@ const params = getUrlVars();
 const tryTimes = (params.times || 100) - 0;
 const recordCount = (params.recordCount || 1000000) - 0;
 
-
 const needClear = typeof params.clear === 'string' ? JSON.parse(params.clear.toLowerCase()) : params.clear;
+
+const outlier = (params.outlier || 100) - 0;
 
 const generatePerson = function() {
 	const fnames = ['Sophia', 'Emma', 'Olivia', 'Isabella', 'Ava', 'Mia', 'Emily', 'Abigail', 'Madison', 'Elizabeth', 'Charlotte', 'Avery', 'Sofia', 'Chloe', 'Ella', 'Harper', 'Amelia', 'Aubrey', 'Addison', 'Evelyn', 'Natalie', 'Grace', 'Hannah', 'Zoey', 'Victoria', 'Lillian', 'Lily', 'Brooklyn', 'Samantha', 'Layla', 'Zoe', 'Audrey', 'Leah', 'Allison', 'Anna', 'Aaliyah', 'Savannah', 'Gabriella', 'Camila', 'Aria', 'Noah', 'Liam', 'Jacob', 'Mason', 'William', 'Ethan', 'Michael', 'Alexander', 'Jayden', 'Daniel', 'Elijah', 'Aiden', 'James', 'Benjamin', 'Matthew', 'Jackson', 'Logan', 'David', 'Anthony', 'Joseph', 'Joshua', 'Andrew', 'Lucas', 'Gabriel', 'Samuel', 'Christopher', 'John', 'Dylan', 'Isaac', 'Ryan', 'Nathan', 'Carter', 'Caleb', 'Luke', 'Christian', 'Hunter', 'Henry', 'Owen', 'Landon', 'Jack'];
@@ -127,32 +128,48 @@ function preformanceTests(initFn, clearFn, option) {
 		refResult(results);
 		return grid;
 	}
-	let count = 0;
 	const grids = [];
+
+	function clearGrid(o) {
+		clearFn(o.grid);
+		o.parent.parentElement.removeChild(o.parent);
+	}
+	function clearGrids() {
+		grids.forEach(clearGrid);
+		grids.length = 0;
+	}
+
 	function time() {
 		const parent = createParent(option.parentTag);
 		option.transformParent(parent);
 		setTimeout(function() {
 			const grid = test(parent);
-			count++;
-			if (count < tryTimes) {
+
+			grids.push({
+				grid: grid,
+				parent: parent,
+			});
+
+			//異常値除外
+			if (outlier) {
+				const lastValue = results.pop();
+				if (lastValue > outlier) {
+					clearGrid(grids.pop());
+					console.log('Exclude outlier values: ' + lastValue);
+				} else {
+					results.push(lastValue);
+				}
+			}
+
+			if (results.length < tryTimes) {
 				setTimeout(function() {
 					if (needClear) {
 						if (typeof needClear === 'number') {
-							grids.push({
-								grid: grid,
-								parent: parent,
-							});
 							if (needClear <= grids.length) {
-								grids.forEach(function(o) {
-									clearFn(o.grid);
-									o.parent.parentElement.removeChild(o.parent);
-								});
-								grids.length = 0;
+								clearGrids();
 							}
 						} else {
-							clearFn(grid);
-							parent.parentElement.removeChild(parent);
+							clearGrids();
 						}
 					}
 					time();
