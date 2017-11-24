@@ -1,4 +1,4 @@
-/*global google*/
+/*global google, hljs*/
 /*eslint no-unused-vars:0*/
 
 'use strict';
@@ -79,9 +79,10 @@ function refResult(results) {
 	resultElement.innerHTML = '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span><br>' +
 		'times: <b>' + results.length + '</b><br>record count: <b>' + (recordCount - 0).toLocaleString() + '</b>';
 }
-function refResultEnd(results) {
+function refResultEnd(results, initFn) {
+	appendCode(initFn + '');
 	if (results.length > 1) {
-		drawChart(results);
+		appendChart(results);
 	}
 	if (window.opener && window.opener.addBenchmark) {
 		let html;
@@ -138,7 +139,7 @@ function preformanceTests(initFn, clearFn, option) {
 					time();
 				}, 10);
 			} else {
-				refResultEnd(results);
+				refResultEnd(results, initFn);
 			}
 		}, 100);
 
@@ -146,7 +147,42 @@ function preformanceTests(initFn, clearFn, option) {
 	time();
 }
 
-function drawChart(results) {
+function appendCode(code) {
+	const wrap = document.createElement('div');
+	resultElement.appendChild(wrap);
+	const btn = document.createElement('button');
+	btn.textContent = 'view code';
+	wrap.appendChild(btn);
+
+	const pre = document.createElement('pre');
+	pre.style.display = 'none';
+	const codeEl = document.createElement('code');
+	codeEl.textContent = code;
+	codeEl.classList.add('js');
+	pre.appendChild(codeEl);
+	wrap.appendChild(pre);
+
+	const link = document.createElement('link');
+	link.rel = 'stylesheet';
+	link.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css';
+	document.head.appendChild(link);
+	const script = document.createElement('script');
+	script.src = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js';
+	script.onload = function() {
+		hljs.initHighlighting();
+	};
+	document.head.appendChild(script);
+
+	btn.onclick = function() {
+		if (pre.style.display) {
+			pre.style.display = '';
+		} else {
+			pre.style.display = 'none';
+		}
+	};
+}
+
+function appendChart(results) {
 	google.charts.load('current', {'packages': ['corechart']});
 	google.charts.setOnLoadCallback(function() {
 		const summary = [['ms', 'count']];

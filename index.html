@@ -36,6 +36,9 @@ input[type="number"] {
 .hidden {
 	display: none;
 }
+.million {
+	color: #d9534f;
+}
 
 
 nav {
@@ -76,13 +79,14 @@ nav {
     <table>
         <thead>
             <tr>
-                <th>name</th>
-                <th>100 times init<br>1,000,000 records</th>
-                <th>100 times init<br>dispose after initialization<br>1,000,000 records</th>
+                <th>product</th>
+                <th><span class="million">1,000,000</span> records<br>100 times create</th>
+                <th><span class="million">1,000,000</span> records<br>100 times create<br>dispose after initialization</th>
                 <th>
-                	<input type="number" id="times" value="100"> times init<br>
-                	<input type="checkbox" id="clear" checked="true">dispose after initialization<br>
-                	<input type="number" id="records" value="1000000"> records</th>
+                	<input type="number" id="records" value="1000000"> records<br>
+                	<input type="number" id="times" value="100"> times create<br>
+                	<input type="checkbox" id="clear" checked="true">dispose after initialization
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -94,6 +98,14 @@ nav {
                 <td><a href="./cheetah-grid/index.html">open</a></td>
                 <td><a href="./cheetah-grid/index.html?clear=true">open</a></td>
                 <td><a href="./cheetah-grid/index.html" class="customlink">open</a></td>
+            </tr>
+            <tr>
+                <td>
+                    Cheetah Grid (Customize)
+                </td>
+                <td><a href="./cheetah-grid-customize/index.html">open</a></td>
+                <td><a href="./cheetah-grid-customize/index.html?clear=true">open</a></td>
+                <td><a href="./cheetah-grid-customize/index.html" class="customlink">open</a></td>
             </tr>
             <tr>
                 <td>
@@ -114,6 +126,7 @@ nav {
                 <td><a href="./fin-hypergrid/index.html?clear=true">open</a></td>
                 <td><a href="./fin-hypergrid/index.html" class="customlink">open</a></td>
             </tr>
+
             
         </tbody>
     </table>
@@ -128,10 +141,10 @@ nav {
     <table>
         <thead>
             <tr>
-                <th>name</th>
-                <th>10 times init<br>100,000 records</th>
-                <th>10 times init<br>dispose after initialization<br>100,000 records</th>
-                <th>1 time init<br>1,000,000 records</th>
+                <th>product</th>
+                <th><span class="hundred-thousand">100,000</span> records<br>10 times create</th>
+                <th><span class="hundred-thousand">100,000</span> records<br>10 times create<br>dispose after initialization</th>
+                <th><span class="million">1,000,000</span> records<br>1 time create</th>
             </tr>
         </thead>
         <tbody>
@@ -155,7 +168,7 @@ nav {
             </tr>
             <tr>
                 <td>
-                    <a href="https://www.ag-grid.com//">ag-Grid</a>
+                    <a href="https://www.ag-grid.com">ag-Grid</a>
                     <a class="github-button" href="https://github.com/ag-grid/ag-grid" data-icon="octicon-star" data-show-count="true" aria-label="Star ag-grid/ag-grid on GitHub"></a>
                 </td>
                 <td><a href="./ag-grid/index.html?times=10&recordCount=100000">open</a></td>

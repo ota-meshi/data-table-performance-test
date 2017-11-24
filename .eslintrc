@@ -247,7 +247,7 @@
 		"prefer-const" : 1,
 		"prefer-numeric-literals" : 1,
 		"prefer-rest-params" : 0,
-		"prefer-spread" : 1,
+		"prefer-spread" : 0,
 		"prefer-template" : 0,
 		"require-yield" : 1,
 		"rest-spread-spacing" : 1,
