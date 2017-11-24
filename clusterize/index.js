@@ -12,7 +12,7 @@ function init(parent, data) {
 				'</tr>' +
 			'</thead>' +
 		'</table>' +
-		'<div class="clusterize-scroll" style="max-height: calc(100% - 30px);">' +
+		'<div class="clusterize-scroll" style="max-height: calc(100% - 30px);height: calc(100% - 30px);">' +
 			'<table>' +
 				'<tbody class="clusterize-content">' +
 					'<tr class="clusterize-no-data">' +
