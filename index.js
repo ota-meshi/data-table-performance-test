@@ -1,5 +1,28 @@
 'use strict';
-function custom(href) { // eslint-disable-line no-unused-vars
+window.onload = function() {
+	const as = Array.prototype.slice.call(document.querySelectorAll('a'));
+	as.forEach(function(a) {
+		if (!a.classList.contains('customlink')) {
+			a.onclick = function(e) {
+				link(a.href);
+				e.stopPropagation();
+				e.preventDefault();
+			};
+		} else {
+			a.onclick = function(e) {
+				customLink(a.href);
+				e.stopPropagation();
+				e.preventDefault();
+			};
+		}
+	});
+
+};
+function link(href) { // eslint-disable-line no-unused-vars
+	window.open(href, '_blank');
+	return false;
+}
+function customLink(href) { // eslint-disable-line no-unused-vars
 	href = href + '?times=' +
 		document.getElementById('times').value + '&records=' +
 		document.getElementById('records').value;
@@ -31,6 +54,7 @@ window.addBenchmark = function(name, tryCount, recordsCount, dispose, resultHtml
 	const nameKey = ('benchmark-' + name).replace(/\s/, '-');
 
 	const table = q(document, '#benchmarks');
+	table.classList.remove('hidden');
 	const htr = q(table, 'thead', 'tr');
 	const tbody = q(table, 'tbody');
 	let tr = q(tbody, '#' + nameKey);

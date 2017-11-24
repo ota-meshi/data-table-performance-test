@@ -25,67 +25,106 @@ td {
     border-right: dotted 1px #ddd;
     padding: 5px 10px;
 }
-td > * {
+td> * {
     vertical-align: middle;
 }
 input[type="number"] {
     text-align: right;
     width: 5.5em;
 }
+
+.hidden {
+	display: none;
+}
+
+
+nav {
+    line-height: 80px;
+    height: 80px;
+}
+.primary {
+    background-color: #284060;
+    color: #fff;
+}
+.primary.dark, .primary .dark {
+    background-color: #001a36;
+    color: #fff;
+}
+.share-buttons {
+    text-align: right;
+    padding: 5px;
+}
+.share-buttons>* {
+    line-height: 20px;
+}
+.share-buttons>*>* {
+    vertical-align: bottom;
+}
     </style>
     <script type="text/javascript" src="./index.js"></script>
 </head>
 <body>
-    <a class="github-button" href="https://github.com/ota-meshi" data-size="large" aria-label="Follow @ota-meshi on GitHub">Follow @ota-meshi</a>
-    <a class="github-button" href="https://github.com/ota-meshi/data-table-performance-test" data-size="large" data-icon="octicon-star" aria-label="Star ota-meshi/data-table-performance-test on GitHub">Star</a>
-    <h1>Grid/Data Table/Spreadsheet Components Performance Test</h1>
+	<div class="share-buttons print-hidden primary dark">
+		<span style="display: inline-block;">
+			<a class="github-button" href="https://github.com/ota-meshi/data-table-performance-test" data-icon="octicon-star" data-show-count="true" aria-label="Star ota-meshi/data-table-performance-test on GitHub">Star</a>
+		</span>
+	</div>
+	<nav class="primary">
+		<h1 style="margin-top: 0;">Grid/Data Table/Spreadsheet Components Performance Test</h1>	
+	</nav>
+    <hr>
     <table>
         <thead>
             <tr>
                 <th>name</th>
                 <th>100 times init<br>1,000,000 records</th>
                 <th>100 times init<br>dispose after initialization<br>1,000,000 records</th>
-                <th><input type="number" id="times" value="100"> times init<br><input type="checkbox" id="clear">dispose after initialization<br><input type="number" id="records" value="1000000"> records</th>
+                <th>
+                	<input type="number" id="times" value="100"> times init<br>
+                	<input type="checkbox" id="clear" checked="true">dispose after initialization<br>
+                	<input type="number" id="records" value="1000000"> records</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>
-                    <a href="https://github.com/future-architect/cheetah-grid" target="_blank">Cheetah Grid</a>
+                    <a href="https://github.com/future-architect/cheetah-grid">Cheetah Grid</a>
                     <a class="github-button" href="https://github.com/future-architect/cheetah-grid" data-icon="octicon-star" data-show-count="true" aria-label="Star future-architect/cheetah-grid on GitHub"></a>
                 </td>
-                <td><a href="./cheetah-grid/index.html" target="_blank">open</a></td>
-                <td><a href="./cheetah-grid/index.html?clear=true" target="_blank">open</a></td>
-                <td><a href="javascript:void(0);" onclick="custom('./cheetah-grid/index.html')">open</a></td>
+                <td><a href="./cheetah-grid/index.html">open</a></td>
+                <td><a href="./cheetah-grid/index.html?clear=true">open</a></td>
+                <td><a href="./cheetah-grid/index.html" class="customlink">open</a></td>
             </tr>
             <tr>
                 <td>
-                    <a href="https://github.com/6pac/SlickGrid" target="_blank">SlickGrid</a>
-                    <a class="github-button" href="https://github.com/mleibman/SlickGrid" data-icon="octicon-star" data-show-count="true" aria-label="Star mleibman/SlickGrid on GitHub"></a>
+                    <a href="https://github.com/6pac/SlickGrid">SlickGrid</a><br>
+                    mleibman/SlickGrid<a class="github-button" href="https://github.com/mleibman/SlickGrid" data-icon="octicon-star" data-show-count="true" aria-label="Star mleibman/SlickGrid on GitHub"></a><br>
+                    6pac/SlickGrid<a class="github-button" href="https://github.com/6pac/SlickGrid" data-icon="octicon-star" data-show-count="true" aria-label="Star 6pac/SlickGrid on GitHub"></a>
                 </td>
-                <td><a href="./slickgrid/index.html" target="_blank">open</a></td>
-                <td><a href="./slickgrid/index.html?clear=true" target="_blank">open</a></td>
-                <td><a href="javascript:void(0);" onclick="custom('./slickgrid/index.html')">open</a></td>
+                <td><a href="./slickgrid/index.html">open</a></td>
+                <td><a href="./slickgrid/index.html?clear=true">open</a></td>
+                <td><a href="./slickgrid/index.html" class="customlink">open</a></td>
             </tr>
             <tr>
                 <td>
-                    <a href="https://github.com/openfin/fin-hypergrid" target="_blank">fin-hypergrid</a>
+                    <a href="https://github.com/openfin/fin-hypergrid">fin-hypergrid</a>
                     <a class="github-button" href="https://github.com/fin-hypergrid/core" data-icon="octicon-star" data-show-count="true" aria-label="Star fin-hypergrid/core on GitHub"></a>
                 </td>
-                <td><a href="./fin-hypergrid/index.html" target="_blank">open</a></td>
-                <td><a href="./fin-hypergrid/index.html?clear=true" target="_blank">open</a></td>
-                <td><a href="javascript:void(0);" onclick="custom('./fin-hypergrid/index.html')">open</a></td>
+                <td><a href="./fin-hypergrid/index.html">open</a></td>
+                <td><a href="./fin-hypergrid/index.html?clear=true">open</a></td>
+                <td><a href="./fin-hypergrid/index.html" class="customlink">open</a></td>
             </tr>
             
         </tbody>
     </table>
     <h3>benchmarks</h3>
-    <table id="benchmarks">
+    <table id="benchmarks" class="hidden">
         <thead><tr><th>name</th></tr></thead>
         <tbody></tbody>
     </table>
+    <hr>
 
-    <h1>others</h1>
+    <h1 class="primary">others</h1>
     <table>
         <thead>
             <tr>
@@ -98,40 +137,49 @@ input[type="number"] {
         <tbody>
             <tr>
                 <td>
-                    <a href="https://handsontable.com/" target="_blank">Handsontable</a>
+                    <a href="https://handsontable.com/">Handsontable</a>
                     <a class="github-button" href="https://github.com/handsontable/handsontable" data-icon="octicon-star" data-show-count="true" aria-label="Star handsontable/handsontable on GitHub"></a>
                 </td>
-                <td><a href="./handsontable/index.html?times=10&recordCount=100000" target="_blank">open</a></td>
-                <td><a href="./handsontable/index.html?times=10&recordCount=100000&clear=true" target="_blank">open</a></td>
-                <td><a href="./handsontable/index.html?times=1&recordCount=100000" target="_blank">open</a></td>
+                <td><a href="./handsontable/index.html?times=10&recordCount=100000">open</a></td>
+                <td><a href="./handsontable/index.html?times=10&recordCount=100000&clear=true">open</a></td>
+                <td><a href="./handsontable/index.html?times=1&recordCount=100000">open</a></td>
             </tr>
             <tr>
                 <td>
-                    <a href="https://datatables.net/" target="_blank">DataTables</a>
+                    <a href="https://datatables.net/">DataTables</a>
                     <a class="github-button" href="https://github.com/DataTables/DataTables" data-icon="octicon-star" data-show-count="true" aria-label="Star DataTables/DataTables on GitHub"></a>
                 </td>
-                <td><a href="./datatables/index.html?times=10&recordCount=100000" target="_blank">open</a></td>
-                <td><a href="./datatables/index.html?times=10&recordCount=100000&clear=true" target="_blank">open</a></td>
-                <td><a href="./datatables/index.html?times=1&recordCount=100000" target="_blank">open</a></td>
+                <td><a href="./datatables/index.html?times=10&recordCount=100000">open</a></td>
+                <td><a href="./datatables/index.html?times=10&recordCount=100000&clear=true">open</a></td>
+                <td><a href="./datatables/index.html?times=1&recordCount=100000">open</a></td>
             </tr>
             <tr>
                 <td>
-                    <a href="https://www.ag-grid.com//" target="_blank">ag-Grid</a>
+                    <a href="https://www.ag-grid.com//">ag-Grid</a>
                     <a class="github-button" href="https://github.com/ag-grid/ag-grid" data-icon="octicon-star" data-show-count="true" aria-label="Star ag-grid/ag-grid on GitHub"></a>
                 </td>
-                <td><a href="./ag-grid/index.html?times=10&recordCount=100000" target="_blank">open</a></td>
-                <td><a href="./ag-grid/index.html?times=10&recordCount=100000&clear=true" target="_blank">open</a></td>
-                <td><a href="./ag-grid/index.html?times=1&recordCount=100000" target="_blank">open</a></td>
+                <td><a href="./ag-grid/index.html?times=10&recordCount=100000">open</a></td>
+                <td><a href="./ag-grid/index.html?times=10&recordCount=100000&clear=true">open</a></td>
+                <td><a href="./ag-grid/index.html?times=1&recordCount=100000">open</a></td>
             </tr>
 
             <tr>
                 <td>
-                    <a href="http://w2ui.com/web/" target="_blank">w2ui</a>
+                    <a href="http://w2ui.com/web/">w2ui</a>
                     <a class="github-button" href="https://github.com/vitmalina/w2ui" data-icon="octicon-star" data-show-count="true" aria-label="Star vitmalina/w2ui on GitHub"></a>
                 </td>
-                <td><a href="./w2ui/index.html?times=10&recordCount=100000" target="_blank">open</a></td>
-                <td><a href="./w2ui/index.html?times=10&recordCount=100000&clear=true" target="_blank">open</a></td>
-                <td><a href="./w2ui/index.html?times=1&recordCount=100000" target="_blank">open</a></td>
+                <td><a href="./w2ui/index.html?times=10&recordCount=100000">open</a></td>
+                <td><a href="./w2ui/index.html?times=10&recordCount=100000&clear=true">open</a></td>
+                <td><a href="./w2ui/index.html?times=1&recordCount=100000">open</a></td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="https://github.com/TonyGermaneri/canvas-datagrid">canvas-datagrid</a>
+                    <a class="github-button" href="https://github.com/TonyGermaneri/canvas-datagrid" data-icon="octicon-star" data-show-count="true" aria-label="Star TonyGermaneri/canvas-datagrid on GitHub"></a>
+                </td>
+                <td><a href="./canvas-datagrid/index.html?times=10&recordCount=100000">open</a></td>
+                <td><a href="./canvas-datagrid/index.html?times=10&recordCount=100000&clear=true">open</a></td>
+                <td><a href="./canvas-datagrid/index.html?times=1&recordCount=100000">open</a></td>
             </tr>
         </tbody>
     </table>

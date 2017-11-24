@@ -80,19 +80,26 @@ function refResult(results) {
 		'times: <b>' + results.length + '</b><br>record count: <b>' + (recordCount - 0).toLocaleString() + '</b>';
 }
 function refResultEnd(results) {
-	drawChart(results);
+	if (results.length > 1) {
+		drawChart(results);
+	}
 	if (window.opener && window.opener.addBenchmark) {
-		const sum = results.reduce(function(prev, current) {
-			return prev + current;
-		});
-		const max = results.reduce(function(prev, current) {
-			return Math.max(prev, current);
-		});
-		const min = results.reduce(function(prev, current) {
-			return Math.min(prev, current);
-		});
-		const avg = sum / results.length;
-		const html = '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span>';
+		let html;
+		if (results.length > 1) {
+			const sum = results.reduce(function(prev, current) {
+				return prev + current;
+			});
+			const max = results.reduce(function(prev, current) {
+				return Math.max(prev, current);
+			});
+			const min = results.reduce(function(prev, current) {
+				return Math.min(prev, current);
+			});
+			const avg = sum / results.length;
+			html = '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span>';
+		} else {
+			html = '<span>average: <b>' + results[0] + 'ms';
+		}
 		const name = document.querySelector('h1').textContent;
 		window.opener.addBenchmark(name, tryTimes, recordCount, needClear, html);
 	}
