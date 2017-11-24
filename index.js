@@ -1,36 +1,60 @@
 'use strict';
+function findParentTable(e) {
+	if (e.tagName.toLowerCase() === 'table') {
+		return e;
+	}
+	return findParentTable(e.parentElement);
+}
 window.onload = function() {
 	const as = Array.prototype.slice.call(document.querySelectorAll('a'));
+	const customlinks = [];
 	as.forEach(function(a) {
-		if (!a.classList.contains('customlink')) {
-			a.onclick = function(e) {
-				link(a.href);
-				e.stopPropagation();
-				e.preventDefault();
-			};
-		} else {
-			a.onclick = function(e) {
-				customLink(a.href);
-				e.stopPropagation();
-				e.preventDefault();
-			};
+		if (a.classList.contains('customlink')) {
+			customlinks.push(a);
 		}
+		a.onclick = function(e) {
+			e.stopPropagation();
+			e.preventDefault();
+			window.open(a.href, '_blank');
+		};
+	});
+	function valClass(input) {
+		if (input.value - 0 >= 1000000) {
+			input.classList.add('million');
+		} else {
+			input.classList.remove('million');
+		}
+	}
+	const recordsInputs = Array.prototype.slice.call(document.querySelectorAll('.records'));
+	recordsInputs.forEach(function(recordsInput) {
+		valClass(recordsInput);
+		recordsInput.addEventListener('change', function() {
+			valClass(recordsInput);
+		});
+	});
+	const inputs = Array.prototype.slice.call(document.querySelectorAll('.records,.times,.clear'));
+	inputs.forEach(function(input) {
+		customlinks.forEach(function(a) {
+			bindCustomLinkHref(a);
+		});
+		input.addEventListener('change', function() {
+			customlinks.forEach(function(a) {
+				bindCustomLinkHref(a);
+			});
+		});
 	});
 
 };
-function link(href) { // eslint-disable-line no-unused-vars
-	window.open(href, '_blank');
-	return false;
-}
-function customLink(href) { // eslint-disable-line no-unused-vars
+function bindCustomLinkHref(a) {
+	const table = findParentTable(a);
+	let href = a.href.replace(a.search, '').replace(a.hash, '');
 	href = href + '?times=' +
-		document.getElementById('times').value + '&records=' +
-		document.getElementById('records').value;
-	if (document.getElementById('clear').checked) {
+		table.querySelector('.times').value + '&records=' +
+		table.querySelector('.records').value;
+	if (table.querySelector('.clear').checked) {
 		href += '&clear=true';
 	}
-	window.open(href, '_blank');
-	return false;
+	a.href = href;
 }
 window.addBenchmark = function(name, tryCount, recordsCount, dispose, resultHtml) {
 	const q = function(e, sel) {
