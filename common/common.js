@@ -13,7 +13,11 @@ function getUrlVars() {
 	const hash = url.slice(1).split('&');
 	for (let i = 0; i < hash.length; i++) {
 		const array = hash[i].split('=');
-		vars[array[0]] = array[1];
+		if (array.length > 1) {
+			vars[array[0]] = array[1];
+		} else {
+			vars[array[0]] = true;
+		}
 	}
 
 	return vars;
@@ -24,7 +28,7 @@ const tryTimes = (params.times || 100) - 0;
 const recordCount = (params.recordCount || 1000000) - 0;
 
 
-const needClear = !!params.clear;
+const needClear = typeof params.clear === 'string' ? JSON.parse(params.clear.toLowerCase()) : params.clear;
 
 const generatePerson = function() {
 	const fnames = ['Sophia', 'Emma', 'Olivia', 'Isabella', 'Ava', 'Mia', 'Emily', 'Abigail', 'Madison', 'Elizabeth', 'Charlotte', 'Avery', 'Sofia', 'Chloe', 'Ella', 'Harper', 'Amelia', 'Aubrey', 'Addison', 'Evelyn', 'Natalie', 'Grace', 'Hannah', 'Zoey', 'Victoria', 'Lillian', 'Lily', 'Brooklyn', 'Samantha', 'Layla', 'Zoe', 'Audrey', 'Leah', 'Allison', 'Anna', 'Aaliyah', 'Savannah', 'Gabriella', 'Camila', 'Aria', 'Noah', 'Liam', 'Jacob', 'Mason', 'William', 'Ethan', 'Michael', 'Alexander', 'Jayden', 'Daniel', 'Elijah', 'Aiden', 'James', 'Benjamin', 'Matthew', 'Jackson', 'Logan', 'David', 'Anthony', 'Joseph', 'Joshua', 'Andrew', 'Lucas', 'Gabriel', 'Samuel', 'Christopher', 'John', 'Dylan', 'Isaac', 'Ryan', 'Nathan', 'Carter', 'Caleb', 'Luke', 'Christian', 'Hunter', 'Henry', 'Owen', 'Landon', 'Jack'];
@@ -77,7 +81,7 @@ function refResult(results) {
 	});
 	const avg = sum / results.length;
 	resultElement.innerHTML = '<span>average: <b>' + avg + 'ms</b> / max: ' + max + 'ms min: ' + min + 'ms</span><br>' +
-		'times: <b>' + results.length + '</b><br>record count: <b>' + (recordCount - 0).toLocaleString() + '</b>';
+		'times: <b>' + results.length + '</b><br>record count: <b>' + recordCount.toLocaleString() + '</b>';
 }
 function refResultEnd(results, initFn) {
 	appendCode(initFn + '');
@@ -124,6 +128,7 @@ function preformanceTests(initFn, clearFn, option) {
 		return grid;
 	}
 	let count = 0;
+	const grids = [];
 	function time() {
 		const parent = createParent(option.parentTag);
 		option.transformParent(parent);
@@ -133,8 +138,22 @@ function preformanceTests(initFn, clearFn, option) {
 			if (count < tryTimes) {
 				setTimeout(function() {
 					if (needClear) {
-						clearFn(grid);
-						parent.parentElement.removeChild(parent);
+						if (typeof needClear === 'number') {
+							grids.push({
+								grid: grid,
+								parent: parent,
+							});
+							if (needClear <= grids.length) {
+								grids.forEach(function(o) {
+									clearFn(o.grid);
+									o.parent.parentElement.removeChild(o.parent);
+								});
+								grids.length = 0;
+							}
+						} else {
+							clearFn(grid);
+							parent.parentElement.removeChild(parent);
+						}
 					}
 					time();
 				}, 10);
