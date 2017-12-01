@@ -92,7 +92,7 @@ window.addBenchmark = function(name, tryCount, recordsCount, dispose, resultHtml
 	let testTargetTh = q(headerTr, '#' + testKey);
 	if (!testTargetTh) {
 		testTargetTh = e('th', testKey, '<th>' +
-			'Number of records: '(recordsCount - 0).toLocaleString() +
+			'Number of records: ' + (recordsCount - 0).toLocaleString() +
 			'Number of trials: ' + tryCount +
 			'Dispose instance after init: ' + (!!dispose) +
 			'</th>');
