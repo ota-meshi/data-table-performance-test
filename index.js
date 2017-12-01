@@ -91,9 +91,11 @@ window.addBenchmark = function(name, tryCount, recordsCount, dispose, resultHtml
 	
 	let testTargetTh = q(headerTr, '#' + testKey);
 	if (!testTargetTh) {
-		testTargetTh = e('th', testKey, '<th>' + tryCount + ' times init' +
-					(dispose ? '<br>dispose after initialization' : '') +
-					'<br>' + (recordsCount - 0).toLocaleString() + ' records</th>');
+		testTargetTh = e('th', testKey, '<th>' +
+			'Number of records: '(recordsCount - 0).toLocaleString() +
+			'Number of trials: ' + tryCount +
+			'Dispose instance after init: ' + (!!dispose) +
+			'</th>');
 		headerTr.appendChild(testTargetTh);
 	}
 	const index = Array.prototype.indexOf.call(headerTr.children, testTargetTh);

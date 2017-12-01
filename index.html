@@ -80,12 +80,20 @@ nav {
         <thead>
             <tr>
                 <th>product</th>
-                <th><span class="million">1,000,000</span> records<br>100 times create</th>
-                <th><span class="million">1,000,000</span> records<br>100 times create<br>dispose after initialization</th>
                 <th>
-                	<input type="number" class="records" value="1000000"> records<br>
-                	<input type="number" class="times" value="100"> times create<br>
-                	<input type="checkbox" class="clear" checked="true">dispose after initialization
+                    Number of records: <span class="million">1,000,000</span><br>
+                    Number of trials: 100<br>
+                    Dispose instance after init: false
+                </th>
+                <th>
+                    Number of records: <span class="million">1,000,000</span><br>
+                    Number of trials: 100<br>
+                    Dispose instance after init: true
+                </th>
+                <th>
+                	Number of records: <input type="number" class="records" value="1000000"><br>
+                	number of trials:<input type="number" class="times" value="100"><br>
+                	Dispose instance after init: <input type="checkbox" class="clear" checked="true">
                 </th>
             </tr>
         </thead>
@@ -142,13 +150,24 @@ nav {
         <thead>
             <tr>
                 <th>product</th>
-                <th><span class="hundred-thousand">100,000</span> records<br>10 times create</th>
-                <th><span class="hundred-thousand">100,000</span> records<br>10 times create<br>dispose after initialization</th>
-                <th><span class="million">1,000,000</span> records<br>1 time create</th>
                 <th>
-                	<input type="number" class="records" value="100000"> records<br>
-                	<input type="number" class="times" value="10"> times create<br>
-                	<input type="checkbox" class="clear" checked="true">dispose after initialization
+                    Number of records: <span class="hundred-thousand">100,000</span><br>
+                    Number of trials: 10<br>
+                    Dispose instance after init: false
+                </th>
+                <th>
+                    Number of records: <span class="hundred-thousand">100,000</span><br>
+                    Number of trials: 10<br>
+                    Dispose instance after init: true
+                </th>
+                <th>
+                    Number of records: <span class="million">1,000,000</span><br>
+                    Number of trials: 1<br>
+                </th>
+                <th>
+                    Number of records: <input type="number" class="records" value="1000000"><br>
+                    number of trials:<input type="number" class="times" value="100"><br>
+                    Dispose instance after init: <input type="checkbox" class="clear" checked="true">
                 </th>
             </tr>
         </thead>
