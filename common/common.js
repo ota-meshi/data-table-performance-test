@@ -26,7 +26,7 @@ function getUrlVars() {
 const params = getUrlVars();
 const tryTimes = (params.times || 100) - 0;
 const recordCount = (params.recordCount || 1000000) - 0;
-
+const interval = (params.interval || 400) - 0;
 const needClear = typeof params.clear === 'string' ? JSON.parse(params.clear.toLowerCase()) : params.clear;
 
 const outlier = params.outlier - 0;
@@ -90,7 +90,7 @@ function resultInfoHtml(results) {
 
 function refResult(results) {
 	resultElement.innerHTML = resultInfoHtml(results) + '<br>' +
-		'times: <b>' + results.length + '</b><br>record count: <b>' + recordCount.toLocaleString() + '</b>';
+		'times: <b>' + results.length + '/' + tryTimes + '</b><br>record count: <b>' + recordCount.toLocaleString() + '</b>';
 }
 function refResultEnd(results, initFn) {
 	appendCode(initFn + '');
@@ -170,7 +170,7 @@ function preformanceTests(initFn, clearFn, option) {
 			} else {
 				refResultEnd(results, initFn);
 			}
-		}, 100);
+		}, interval);
 
 	}
 	time();
