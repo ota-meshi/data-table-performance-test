@@ -40,18 +40,21 @@ function init(parent, data) {
 	}
 
 	const CustomizeGrid = function() {
-		DrawGrid.apply(this, arguments);
-		this.rowCount = data.length + 1;
-		this.colCount = headerCaptions.length;
-		this.frozenColCount = 1;
-		this.frozenRowCount = 1;
+		const self = DrawGrid.apply(this, arguments) || this;
+		self.rowCount = data.length + 1;
+		self.colCount = headerCaptions.length;
+		self.frozenColCount = 1;
+		self.frozenRowCount = 1;
 		
-		this.setColWidth(0, 100);
-		this.setColWidth(1, 200);
-		this.setColWidth(2, 200);
-		this.setColWidth(3, 200);
+		self.setColWidth(0, 100);
+		self.setColWidth(1, 200);
+		self.setColWidth(2, 200);
+		self.setColWidth(3, 200);
+
+		return self
 	};
 	CustomizeGrid.prototype = Object.create(DrawGrid.prototype);
+	CustomizeGrid.prototype.constructor = CustomizeGrid;
 	function getCellValue(col, row) {
 		if (row === 0) {
 			return headerCaptions[col];
@@ -84,12 +87,12 @@ function init(parent, data) {
 		}
 	};
 	function fillCell(ctx, grid, context) {
-		const state = context.getSelectState();
+		const range = context.getSelection().range;
 		const rect = context.getRect();
 		const row = context.row;
 		const col = context.col;
 
-		const fillColor = state.selection ? theme.selectionBgColor
+		const fillColor = cellInRange(range, col, row) ? theme.selectionBgColor
 			: row < grid.frozenRowCount ? theme.frozenRowsBgColor : theme.defaultBgColor;
 
 		ctx.fillStyle = getColor(fillColor, col, row, grid, ctx);
@@ -147,3 +150,11 @@ function clear(grid) {
 
 preformanceTests(init, clear);
 
+function cellInRange(range, col, row) {
+	return (
+		range.start.col <= col &&
+		col <= range.end.col &&
+		range.start.row <= row &&
+		row <= range.end.row
+	);
+}
